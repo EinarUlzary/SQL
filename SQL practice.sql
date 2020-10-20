@@ -66,3 +66,32 @@ FROM bonus;
  
 SELECT *
 FROM title;
+
+/* Write an SQL query to fetch “FIRST_NAME” from Worker table using the alias name as <WORKER_NAME>. */
+
+SELECT FIRST_NAME as WORKER_NAME
+FROM worker;
+
+/* Write an SQL query to fetch “FIRST_NAME” from Worker table in upper case */
+
+SELECT upper(FIRST_NAME) 
+FROM worker ;
+
+/* Write an SQL query to fetch unique values of DEPARTMENT from Worker table */
+
+SELECT distinct DEPARTMENT 
+FROM worker ;
+
+/* Write an SQL query to print the first three characters of FIRST_NAME from Worker table. */
+
+SELECT SUBSTRING(FIRST_NAME, 1, 3) AS ExtractString
+FROM worker ;
+
+/* Write an SQL query to find the position of the alphabet (‘a’) in the first name column ‘Amitabh’ from Worker table. */
+
+
+
+
+
+
+
