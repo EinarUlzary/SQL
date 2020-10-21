@@ -89,9 +89,32 @@ FROM worker ;
 
 /* Write an SQL query to find the position of the alphabet (‘a’) in the first name column ‘Amitabh’ from Worker table. */
 
+SELECT POSITION("a" IN FIRST_NAME)
+FROM Worker
+WHERE FIRST_NAME="Amitabh";
 
+/* Write an SQL query to print the FIRST_NAME from Worker table after removing white spaces from the right side. */
 
+SELECT RTRIM(FIRST_NAME) as First_Name
+FROM Worker;
 
+/*Write an SQL query to print the DEPARTMENT from Worker table after removing white spaces from the left side.*/
 
+SELECT LTRIM(DEPARTMENT) as Department
+FROM Worker;
 
+/* Write an SQL query that fetches the unique values of DEPARTMENT from Worker table and prints its length. */
+
+SELECT distinct length(DEPARTMENT) as Department_lenght
+FROM Worker;
+
+/* Write an SQL query to print the FIRST_NAME from Worker table after replacing ‘a’ with ‘A’. */
+
+SELECT REPLACE(FIRST_NAME, 'a', 'A') as First_Name_Replace
+FROM Worker;
+
+/* Write an SQL query to print the FIRST_NAME and LAST_NAME from Worker table into a single column COMPLETE_NAME. A space char should separate them. */
+
+SELECT  CONCAT(FIRST_NAME , ' ' , LAST_NAME)  as COMPLETE_NAME
+FROM Worker;
 
