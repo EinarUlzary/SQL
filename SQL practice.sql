@@ -118,3 +118,187 @@ FROM Worker;
 SELECT  CONCAT(FIRST_NAME , ' ' , LAST_NAME)  as COMPLETE_NAME
 FROM Worker;
 
+/* Write an SQL query to print all Worker details from the Worker table order by FIRST_NAME Ascending.*/
+
+SELECT *
+FROM Worker
+ORDER BY FIRST_NAME ASC;
+
+/* Write an SQL query to print all Worker details from the Worker table order by FIRST_NAME Ascending and DEPARTMENT Descending. */
+
+SELECT *
+FROM Worker
+ORDER BY FIRST_NAME ASC , DEPARTMENT desc;
+
+/*Write an SQL query to print details for Workers with the first name as “Vipul” and “Satish” from Worker table.*/
+
+SELECT *
+FROM Worker
+WHERE FIRST_NAME in ('Vipul' , 'Satish') ;
+
+/* Write an SQL query to print details of workers excluding first names, “Vipul” and “Satish” from Worker table. */
+
+SELECT *
+FROM Worker
+WHERE FIRST_NAME NOT in ('Vipul' , 'Satish') ;
+
+/* Write an SQL query to print details of Workers with DEPARTMENT name as “Admin”. */
+
+SELECT *
+FROM Worker
+WHERE DEPARTMENT like 'Admin%' ;
+
+/* Write an SQL query to print details of the Workers whose FIRST_NAME contains ‘a’. */
+
+SELECT *
+FROM Worker
+WHERE FIRST_NAME like '%a%' ;
+
+/* Write an SQL query to print details of the Workers whose FIRST_NAME ends with ‘a’. */
+
+SELECT *
+FROM Worker
+WHERE FIRST_NAME like '%a' ;
+
+/* Write an SQL query to print details of the Workers whose FIRST_NAME ends with ‘h’ and contains six alphabets. */
+
+SELECT *
+FROM Worker
+WHERE FIRST_NAME like '%h' AND length(FIRST_NAME)=6;
+
+/* Write an SQL query to print details of the Workers whose SALARY lies between 100000 and 500000. */
+
+SELECT *
+FROM Worker
+WHERE SALARY between 100000 and 500000 ;
+
+/*Write an SQL query to print details of the Workers who have joined in Feb’2014.*/
+
+SELECT *
+FROM Worker
+WHERE JOINING_DATE BETWEEN  '2014-01-31' AND '2014-03-01'; 
+
+/* Write an SQL query to fetch the count of employees working in the department ‘Admin’. */
+
+SELECT COUNT(FIRST_NAME) 
+FROM Worker
+WHERE DEPARTMENT like 'Admin'; 
+
+/* Write an SQL query to fetch worker names with salaries >= 50000 and <= 100000. */
+
+SELECT FIRST_NAME , salary
+FROM Worker
+WHERE salary between 50000 and 100000; 
+
+/*Write an SQL query to fetch the no. of workers for each department in the descending order.*/
+
+SELECT COUNT(WORKER_ID) as 'no_of_workers' , DEPARTMENT
+FROM Worker
+group by DEPARTMENT
+order by no_of_workers desc; 
+
+/* Write an SQL query to print details of the Workers who are also Managers. */
+          
+SELECT FIRST_NAME , WORKER_TITLE
+FROM Worker
+INNER JOIN title
+ON Worker.WORKER_ID = title.WORKER_REF_ID
+WHERE WORKER_TITLE='manager';
+
+/* Write an SQL query to fetch duplicate records having matching data in some fields of a table. */
+
+SELECT * 
+FROM title
+INNER JOIN(
+SELECT WORKER_TITLE, AFFECTED_FROM 
+FROM title
+GROUP BY WORKER_TITLE, AFFECTED_FROM
+HAVING COUNT(*) > 1) b
+on title.WORKER_TITLE = b.WORKER_TITLE;
+
+/*Write an SQL query to show only odd rows from a table.*/
+
+SELECT * 
+FROM Worker 
+WHERE MOD (WORKER_ID, 2) <> 0;
+
+/*  Write an SQL query to show only even rows from a table. */
+
+SELECT * 
+FROM Worker 
+WHERE MOD (WORKER_ID, 2) = 0;
+
+/* Write an SQL query to clone a new table from another table. */
+
+CREATE TABLE new_worker LIKE worker;
+ 
+INSERT INTO new_worker SELECT * FROM worker;
+
+/* Write an SQL query to fetch intersecting records of two tables. */
+
+SELECT *
+FROM worker
+UNION
+SELECT *
+FROM new_worker;
+
+/* Write an SQL query to show records from one table that another table does not have. */
+
+SELECT w.*
+FROM worker w
+LEFT JOIN bonus b
+ON w.WORKER_ID = b.WORKER_REF_ID
+WHERE b.WORKER_REF_ID IS NULL;
+
+/* Write an SQL query to show the current date and time. */
+
+SELECT CURRENT_TIMESTAMP();
+
+/* Write an SQL query to show the top n (say 3) records of a table. */
+
+SELECT *
+FROM worker
+ORDER BY WORKER_ID asc
+LIMIT 3;
+
+/* Write an SQL query to determine the nth (say n=5) highest salary from a table. */
+
+SELECT FIRST_NAME, salary
+FROM worker
+ORDER BY salary desc
+LIMIT 5;
+
+/* Write an SQL query to determine the 5th highest salary without using TOP or limit method. */
+
+SELECT FIRST_NAME, salary
+FROM (
+SELECT FIRST_NAME, salary,
+ROW_NUMBER() OVER (ORDER BY salary desc) AS ROWNUM
+FROM worker
+) T
+WHERE ROWNUM <6;
+
+/* Write an SQL query to fetch the list of employees with the same salary. */
+
+SELECT worker.FIRST_NAME , worker.salary
+FROM worker
+INNER JOIN new_worker
+on worker.salary = new_worker.salary and worker.WORKER_ID <> new_worker.WORKER_ID;
+
+
+/* Write an SQL query to show the second highest salary from a table. */
+
+SELECT FIRST_NAME, MAX(salary) AS salary
+  FROM worker
+ WHERE salary < (SELECT MAX(salary)
+                 FROM worker); 
+
+
+                   
+
+
+
+
+
+
+
