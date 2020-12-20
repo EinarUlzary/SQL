@@ -1,3 +1,3 @@
 # SQL
 
-my practice in creating database and executing queries against a database.
+My practice in creating database and executing queries against a database.
